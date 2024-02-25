@@ -49,10 +49,10 @@ for i = m-1:-1:1
         sumatoria = sumatoria + A(i, j) * solucion(j);
     end
     
-    % Cálculo del valor de la variable i
+    % Calculo del valor de la variable correspondiente
     solucion(i) = (B(i) - sumatoria) / A(i, i);
 end
-% Imprimir el vector solución
+
 fprintf('\n---Procedimiento terminado---\n \nEl vector solución es:\n');
 fprintf('%f\n', solucion);
 end
