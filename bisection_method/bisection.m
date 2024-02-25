@@ -9,16 +9,16 @@ clear all;
 syms x;
 
 % Definir la función base
-fx = (5 * cos(3 * x)) / x;
-
-% Grafico de la función en el intervalo [pi/3,(2*pi)/3]
-fplot((5*cos(3*x))/x,[pi/3,2*pi/3],'LineWidth',5)
-grid on
+fx = (10 * cos(2 * x)) / x;
 
 % Digitar los valores iniciales del intervalo
 fprintf('---Valor inicial del intervalo---\n');
 a = input('Digite el valor de a: ');
 b = input('Digite el valor de b: ');
+
+% Grafico de la función en el intervalo
+fplot((fx/x),[a,b],'LineWidth',5)
+grid on
 
 % 1. Evaluar los valores de la función en a y b
 fa = subs(fx, a);
@@ -65,4 +65,3 @@ else
         fprintf('\n---Procedimiento terminado---\nLa solución aproximada es %8.5f\n',p_medio);
     end 
 end
-
