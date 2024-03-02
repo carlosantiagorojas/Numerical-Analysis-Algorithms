@@ -1,5 +1,3 @@
-% Bisection Method by Carlos Rojas
-
 % Clear screen and delete variables
 clc;
 clear;

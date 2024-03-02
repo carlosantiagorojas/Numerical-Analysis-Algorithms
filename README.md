@@ -1,6 +1,6 @@
 # Numerical Analysis algorithms
 
-This repository contains the implementation of some numerical analysis algorithms in MATLAB.
+Implementation of some basic numerical analysis algorithms in MATLAB. 
 
 ## Algorithms
 - Bisection Method

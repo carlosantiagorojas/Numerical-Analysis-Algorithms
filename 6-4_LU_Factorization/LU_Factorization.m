@@ -1,61 +1,67 @@
-function LU_Factorization(A)
-% Entrada:
-%   - A: Matriz cuadrada de tamaño m x m que se desea descomponer
-% Salidas:
-%   - L: Matriz triangular inferior
-%   - U: Matriz triangular superior
+% Source code:
+% Yasin Shiboul (2024). 
+% LU Factorization by Doolittle's method 
+% (https://www.mathworks.com/matlabcentral/fileexchange/7779-lu-factorization-by-doolittle-s-method), 
+% MATLAB Central File Exchange. Retrieved March 2, 2024.
 
-% Inicialización y obtención del tamaño de la matriz A
+function LU_Factorization(A)
+% Input:
+%   - A: Square matrix of size m x m to be decomposed
+% Outputs:
+%   - L: Lower triangular matrix
+%   - U: Upper triangular matrix
+
+% Initialization and obtaining the size of matrix A
 [m,~] = size(A);
 
-% Inicializa la matriz triangular superior U con ceros
+% Initialize upper triangular matrix U with zeros
 U = zeros(m);
-% Inicializa la matriz triangular inferior L con ceros
+% Initialize lower triangular matrix L with zeros
 L = zeros(m);
 
-% Inicialización de la diagonal de L con unos
+% Initialization of the diagonal of L with ones
 for j = 1:m
     L(j,j) = 1;
 end
 
-% Copia de la primera fila de A a la primera fila de U
+% Copy the first row of A to the first row of U
 for j = 1:m
     U(1,j) = A(1,j);
 end
 
-% Paso 3: Cálculo de los elementos de L y U
+% Step 3: Calculation of elements of L and U
 for i = 2:m
-    % Calcula los elementos de la fila i de L y U
+    % Calculate elements of row i of L and U
     for j = 1:m
         for k = 1:i-1
-            % Cálculo de la suma para calcular los elementos de L
-            suma_L = 0;
+            % Calculation of sum to compute elements of L
+            sum_L = 0;
             if k ~= 1
                 for p = 1:k-1
-                    suma_L = suma_L + L(i,p) * U(p,k);
+                    sum_L = sum_L + L(i,p) * U(p,k);
                 end
             end
-            % Cálculo del elemento de L usando la fórmula de la factorización LU
-            L(i,k) = (A(i,k) - suma_L) / U(k,k);
+            % Calculation of element of L using LU factorization formula
+            L(i,k) = (A(i,k) - sum_L) / U(k,k);
         end
 
-         % Cálculo de los elementos de la fila i de U
+         % Calculation of elements of row i of U
         for k = i:m
-             % Cálculo de la suma para calcular los elementos de U
-             suma_U = 0;
+             % Calculation of sum to compute elements of U
+             sum_U = 0;
            for p = 1:i-1
-               suma_U = suma_U + L(i,p) * U(p,k);
+               sum_U = sum_U + L(i,p) * U(p,k);
            end
-           % Cálculo del elemento de U usando la fórmula de la factorización LU
-           U(i,k) = A(i,k) - suma_U;
+           % Calculation of element of U using LU factorization formula
+           U(i,k) = A(i,k) - sum_U;
         end
     end
 end
 
-% Imprimir las matrices
-fprintf('\n---Procedimiento terminado---\n');
-fprintf('\nResultado de la matriz L:\n');
+% Print the matrices
+fprintf('\n---Procedure completed---\n');
+fprintf('\nResult of matrix L:\n');
 disp(L);
-fprintf('\nResultado de la matriz U:\n');
+fprintf('\nResult of matrix U:\n');
 disp(U);
 end
