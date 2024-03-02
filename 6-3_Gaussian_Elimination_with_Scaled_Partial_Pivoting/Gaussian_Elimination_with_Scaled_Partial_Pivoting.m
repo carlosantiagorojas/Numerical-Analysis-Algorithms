@@ -1,53 +1,53 @@
 function Gaussian_Elimination_with_Scaled_Partial_Pivoting(A, B)
-% Entradas:
-% Matriz aumentada de coeficientes A = [mxn]
-% Vector de constantes B = [mx1]
+% Inputs:
+% Augmented coefficient matrix A = [mxn]
+% Constants vector B = [mx1]
 
-% Obtener las dimensiones de la matriz A
+% Get dimensions of matrix A
 [m, n] = size(A);
 
-% Inicialización del vector solución con ceros
-solucion = zeros(m, 1);
+% Initialize solution vector with zeros
+solution = zeros(m, 1);
 
-% Matriz M para almacenar los multiplicadores durante la eliminación de Gauss
+% Matrix M to store multipliers during Gaussian elimination
 M = zeros(m, m-1);
 
-% Vector D para almacenar los escalados de las filas
+% Vector D to store row scales
 D = ones(m, 1);
 
-% === Eliminación hacia adelante ===
+% === Forward elimination ===
 for k = 1:m-1
-    % Encontrar el pivote con mayor valor absoluto en la columna actual
-    valor_maximo = abs(A(k, k));
-    fila_maximo = k;
+    % Find pivot with maximum absolute value in current column
+    max_value = abs(A(k, k));
+    max_row = k;
     for i = k+1:m
-        if abs(A(i, k)) > valor_maximo
-            valor_maximo = abs(A(i, k));
-            fila_maximo = i;
+        if abs(A(i, k)) > max_value
+            max_value = abs(A(i, k));
+            max_row = i;
         end
     end
     
-    % Intercambio de filas si es necesario
-    if fila_maximo ~= k
-        A([k, fila_maximo], :) = A([fila_maximo, k], :);
-        B([k, fila_maximo]) = B([fila_maximo, k]);
-        D([k, fila_maximo]) = D([fila_maximo, k]);
+    % Swap rows if necessary
+    if max_row ~= k
+        A([k, max_row], :) = A([max_row, k], :);
+        B([k, max_row]) = B([max_row, k]);
+        D([k, max_row]) = D([max_row, k]);
     end
     
-    % Escalado de filas para mejorar la precisión
+    % Row scaling for improved accuracy
     if D(k) ~= 0
         A(k, :) = A(k, :) / D(k);
         B(k) = B(k) / D(k);
     end
     
-    % Almacenar el escalado de la fila actual
+    % Store scale of current row
     D(k) = A(k, k);
     
-    % Calcular y almacenar los multiplicadores de eliminación
+    % Calculate and store elimination multipliers
     for i = k+1:m
         M(i, k) = A(i, k) / A(k, k);
         
-        % Actualizar la fila i de A y el elemento correspondiente de B
+        % Update row i of A and corresponding element of B
         for j = k+1:n
             A(i, j) = A(i, j) - M(i, k) * A(k, j);
         end
@@ -55,21 +55,21 @@ for k = 1:m-1
     end
 end
 
-% === Eliminación hacia atrás ===
-% Con la última ecuación se resuelve para la variable correspondiente
-solucion(m) = B(m) / A(m, m);
+% === Backward elimination ===
+% With the last equation, solve for the corresponding variable
+solution(m) = B(m) / A(m, m);
 for i = m-1:-1:1
-    % Sumatoria de los productos de los coeficientes y las variables ya encontradas
-    suma = 0;
+    % Summation of products of coefficients and already found variables
+    sum = 0;
     for j = i+1:m
-        suma = suma + A(i, j) * solucion(j);
+        sum = sum + A(i, j) * solution(j);
     end
     
-    % Calculo del valor de la variable correspondiente
-    solucion(i) = (B(i) - suma) / A(i, i);
+    % Calculate value of the corresponding variable
+    solution(i) = (B(i) - sum) / A(i, i);
 end
 
-% Imprimir el vector solución
-fprintf('\n---Procedimiento terminado---\n\nEl vector solución es:\n');
-fprintf('%f\n', solucion);
+% Print the solution vector
+fprintf('\n---Procedure completed---\n\nThe solution vector is:\n');
+fprintf('%f\n', solution);
 end
