@@ -1,67 +1,67 @@
-% Metodo bisección Carlos Rojas
+% Bisection Method by Carlos Rojas
 
-% Limpiar pantalla y eliminar variables
+% Clear screen and delete variables
 clc;
 clear;
 clear all;
 
-% Permitir el uso de simbolos
+% Allow the use of symbols
 syms x;
 
-% Definir la función base
+% Define the base function
 fx = (10 * cos(2 * x)) / x;
 
-% Digitar los valores iniciales del intervalo
-fprintf('---Valor inicial del intervalo---\n');
-a = input('Digite el valor de a: ');
-b = input('Digite el valor de b: ');
+% Enter initial values of the interval
+fprintf('---Initial value of the interval---\n');
+a = input('Enter the value of a: ');
+b = input('Enter the value of b: ');
 
-% Grafico de la función en el intervalo
+% Plot the function in the interval
 fplot((fx/x),[a,b],'LineWidth',5)
 grid on
 
-% 1. Evaluar los valores de la función en a y b
+% 1. Evaluate the function values at a and b
 fa = subs(fx, a);
 fb = subs(fx, b);
 
-% 2. Verificar si alguno de los extremos ya es una raiz
+% 2. Check if any of the endpoints is already a root
 if fa == 0 || fb == 0
     if fa == 0
-        fprintf('El valor de x en %8.5f ya es raiz\n', a);
+        fprintf('The value of x at %8.5f is already a root\n', a);
     else 
-        fprintf('El valor de x en %8.5f ya es raiz\n', b);
+        fprintf('The value of x at %8.5f is already a root\n', b);
     end
 else
-    % 3. Evaluar que f(a) * f(b) < 0 garantizando que uno es positivo
-    % y otro negativo para poder aplicar el método 
+    % 3. Check if f(a) * f(b) < 0 ensuring one is positive
+    % and the other negative to apply the method 
 
     if fa * fb > 0
-        fprintf('El intervalo es invalido');
+        fprintf('The interval is invalid');
     else
-        % (intentar con 1e-6)
-        max_error = input('Digite el valor del error máximo permitido: ');
+        % (try with 1e-6)
+        max_error = input('Enter the value of the maximum allowed error: ');
 
-        % Evaluar el error inicial
+        % Evaluate initial error
         error = abs(b - a) / 2;
         
         i = 1;
-        % Iterar hasta que el error sea menor al error maximo
-        fprintf('\n---Aplicando metodo de bisección---\n');
+        % Iterate until the error is less than the maximum error
+        fprintf('\n---Applying bisection method---\n');
         while error > max_error
-            % 4. Evaluar el punto medio
-            p_medio = (a + b) / 2;
-            fprintf('Iteración No. %d, intervalo [%f,%f]',i, a ,b);
-            fprintf(' la raíz más aproximada es:%8.5f\n', p_medio);
-            % 5. Si f(a) * f(p_medio) > 0 entonces a = p_medio
-            if fa * subs(fx, p_medio) > 0
-                a = p_medio;
+            % 4. Evaluate the midpoint
+            midpoint = (a + b) / 2;
+            fprintf('Iteration No. %d, interval [%f,%f]',i, a ,b);
+            fprintf(' the most approximate root is:%8.5f\n', midpoint);
+            % 5. If f(a) * f(midpoint) > 0 then a = midpoint
+            if fa * subs(fx, midpoint) > 0
+                a = midpoint;
             else
-                b = p_medio;
+                b = midpoint;
             end
-            % 6. Evaluar el error
+            % 6. Evaluate the error
             error = abs(b - a) / 2;
             i  = i + 1;
         end
-        fprintf('\n---Procedimiento terminado---\nLa solución aproximada es %8.5f\n',p_medio);
+        fprintf('\n---Procedure completed---\nThe approximate solution is %8.5f\n',midpoint);
     end 
 end
