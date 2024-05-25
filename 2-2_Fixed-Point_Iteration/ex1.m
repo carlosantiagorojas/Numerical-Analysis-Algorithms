@@ -1,4 +1,14 @@
 function ex1( f, a, b, N, erroraprox )
+% metodo de la falsa posicion
+% f: funcion a la que se le busca la raiz
+% a: extremo izquierdo del intervalo
+% b: extremo derecho del intervalo
+% N: numero maximo de iteraciones
+% erroraprox: error de aproximacion deseado
+
+% ejemplo de función para poner por la terminal y despues ejecutar el script
+% val = @(h) asin((10/9)*h - 1) + ((10/9)h - 1) * sqrt(1 - ((10/9)*h - 1).^2) - 1.100144;
+
 ar = zeros(1, N); % Preasignamos el tamaño del vector para almacenar las aproximaciones de la raíz
 br = zeros(1, N); % Preasignamos el tamaño del vector para almacenar el número de iteraciones
 k = 1; % Inicializamos el contador de iteraciones
